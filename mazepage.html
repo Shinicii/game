@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mazepage</title>
+</head>
+<body onload="createMaze()">
+    <h1 id='p2h'>Level 2</h1>
+    <h2 class="l1">Timer: </h2>
+    <h2 class="l2" id = 'timep'>00:00</h2>
+    <div id = "maze-container">
+        <img src ="stickman.png" id = "player" alt = "player" width="50px" height="50px">
+        <img src = "door1.png" id = "door" alt="door" width="50px" height="50px">
+    </div>
+</body>
+
+</html>
+
+<script type="text/javascript">
+
+
+
+let mazearray = [
+    [2,0,1,1,1,0,1,1,1],
+    [1,1,1,0,1,0,1,0,1],
+    [0,1,0,1,1,1,1,0,1],
+    [1,1,0,1,0,0,1,0,1],
+    [1,0,1,1,1,1,1,0,0],
+    [1,0,1,1,0,0,1,1,1],
+    [1,1,0,1,0,1,1,0,1],
+    [0,0,1,1,1,1,1,0,1],
+    [1,1,1,0,0,0,1,0,1]
+]
+let maze = document.getElementById("maze-container")
+let player = document.getElementById("player")
+let door = document.getElementById("door")
+function createMaze(){
+    for(let i = 0; i < mazearray.length ; i++){
+        let row = document.createElement("div");
+        row.classList.add("row")
+
+        for(let j = 0; j < mazearray[i].length ; j++){
+            let cell = document.createElement("div");
+            cell.classList.add("cell")
+            if(mazearray[i][j] == 0){
+                cell.classList.add("wall")
+            }
+            if (i == 0 &&  j == 0){
+                mazearray[i][j] = 2;
+            }
+            row.appendChild(cell);
+        }
+        
+        maze.appendChild(row)
+    }
+
+    setplayerposition(0,0);
+    setdoorposition(0,0);
+}
+
+function setdoorposition(x,y){
+    door.style.bottom = x +'px';
+    door.style.right  = y +'px';
+}
+
+function setplayerposition(x,y){
+    player.style.top = x + 'px';
+    player.style.left = y + 'px';
+}
+
+function getplayerposition(){
+    let position = [-1,-1];
+    for(let i = 0; i < mazearray.length ; i++){
+           for(let j = 0; j < mazearray[i].length ; j++){
+            if (mazearray[i][j] == 2){
+                position[0] = i;
+                position[1] = j;    
+            }
+        }
+    }
+    return position;
+}
+
+document.addEventListener("keydown",
+function(e) {
+    let player = document.getElementById("player");
+    let door = document.getElementById("door");
+    let playerleft = player.offsetLeft;
+    let playertop = player.offsetTop;
+    let doorleft = door.offsetLeft;
+    let doortop = door.offsetTop;
+    let playerposition = getplayerposition();
+
+    if(e.key == "ArrowRight" &&  playerleft < (mazearray.length)*50 && 
+    mazearray[playerposition[0]][playerposition[1]+1]==1) {    
+        playerleft +=50;
+        player.style.left = playerleft + "px"
+        mazearray[playerposition[0]][playerposition[1]] = 1;
+        mazearray[playerposition[0]][playerposition[1]+1] = 2;
+        }
+    
+    if(e.key == "ArrowLeft" && playerleft > 0 && 
+    mazearray[playerposition[0]][playerposition[1]-1]==1){
+        playerleft -=50;
+        player.style.left = playerleft + "px"
+        mazearray[playerposition[0]][playerposition[1]] = 1;
+        mazearray[playerposition[0]][playerposition[1]-1] = 2;
+    }
+    if(e.key == "ArrowUp" && playertop>0 && mazearray[playerposition[0]-1][playerposition[1]]==1){
+        playertop -=50;
+        player.style.top = playertop + "px"
+        mazearray[playerposition[0]]
+        mazearray[playerposition[0]][playerposition[1]] = 1;
+        mazearray[playerposition[0]-1][playerposition[1]] = 2;
+    }
+    if(e.key == "ArrowDown" && playertop < (mazearray.length)*50 && mazearray[playerposition[0]+1][playerposition[1]]==1){
+        playertop +=50;
+        player.style.top = playertop + "px"
+        mazearray[playerposition[0]][playerposition[1]] = 1;
+        mazearray[playerposition[0]+1][playerposition[1]] = 2;
+    }
+    if(playerleft == (doorleft-12) && playertop == (doortop-12)){
+        alert("Maze Complete");
+        localStorage.setItem("s2",timeSecond)
+        window.open("/decode.html","_self");
+    }
+}
+)
+
+const timeH = document.getElementById('timep')
+let timeSecond = 30 
+
+const countDown = setInterval(()=>{
+    if(timeSecond<1){
+    clearInterval(countDown)
+    alert("TimeUp, GAMEOVER")
+    window.open("index.html","_self")
+    localStorage.clear()
+}
+
+    timeSecond-=1;
+    timeH.innerHTML=`00:${timeSecond}`
+},1000)
+
+countDown()
+
+</script>
+
+

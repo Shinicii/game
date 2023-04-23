@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup</title>
+</head>
+<body>
+    <h1 id="sgn">Sign Up to Play!</h1>
+    <form>
+		<label for="username">Username:</label>
+		<input type="text" id="username" name="username"><br><br>
+
+		<label for="password">Password:</label>
+		<input type="password" id="password" name="password"><br><br>
+
+		<label for="email">Email:</label>
+		<input type="email" id="email" name="email"><br><br>
+		<input type="button" value="Login" onclick="input()">
+
+	</form>
+</body>
+</html>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    const BASE_URL = 'https://game.shinicii.repl.co';
+    const input = async () =>{ 
+        
+        try{
+        let username = document.getElementById("username").value
+        let password = document.getElementById("password").value
+        let email = document.getElementById("email").value
+        const response = await axios.post(`${BASE_URL}/newUser/`, {username:username,password:password,email:email});
+        window.open("/index.html","_self")
+
+    }
+    catch(error){
+        alert("Username/email already taken!")
+        window.open("/signup.html","_self")
+    }
+
+    }
+
+</script>

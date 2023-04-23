@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1 id="lgbt">Leaderboard:</h1>
+    <a id='rkp'href="index.html">Play game!</a>
+    <div>
+        <table id="leaderbaord">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    const BASE_URL = 'https://game.shinicii.repl.co'
+    const leader = async () => {
+        try {
+            const response = await axios.get(`${BASE_URL}/getLeaderboard`)
+            data = response.data
+
+            for (let i = 0; i < data.length; i++) {
+
+                const row = document.createElement("tr");
+                const idCell = document.createElement("td");
+                idCell.textContent = data[i].username;
+                const scoreCell = document.createElement("td");
+                scoreCell.textContent = data[i].final_score;
+                row.appendChild(idCell);
+                row.appendChild(scoreCell);
+                document.querySelector("tbody").appendChild(row);
+            }
+        }
+        catch (error) { throw error }
+    }
+    leader()
+
+</script>

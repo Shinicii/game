@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>finish</title>
+</head>
+<body>
+    <h1 id="lastage">Congratulation!</h1>
+    <p>As you open the 3rd door, you see that it is the entrance to your toilet, 
+        you rush to the seat to finish your business. After some comfort, 
+        you go to wash your hands and see the following text in your mirror:</p>
+    <h4 id = "score" name = "score">Score(out of 20): </h4>
+
+    <h4 id="ssa1" name ="ssa"></h4>
+    <h4 id="ssa2" name ="ssa"></h4>
+    <h4 id="ssa3" name ="ssa"></h4>
+
+    <h2>Thanks for playing!</h2>
+    <a href="index.html">Play Again?</a>
+    <a href="leaderboard.html">View Leaderbaord</a>
+</body>
+</html>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  const BASE_URL = 'https://game.shinicii.repl.co';
+  
+    const pass = async () => {
+    try {
+    let s1 = localStorage.getItem("s1")
+    let s2 = localStorage.getItem("s2")
+    let s3 = localStorage.getItem("s3")
+    let username = localStorage.getItem("username")
+    let score1 = Number(s1);
+    let score2 = Number(Math.floor(s2/2.5))
+    let score3 = Number(s3)
+    let displayScore = document.getElementById("score")
+    let final_score = score1+score2+score3;
+    let ss1 = ''
+    let ss2 = ''
+    let ss3 = ''
+    if(score1 == 5){
+        ss1 = 'Your eye for detail is Amazing!'
+    }
+    if( score1 == 4 || score1 == 3){
+        ss1 = 'Your eye for detail is Good!'
+    }
+    else if (score1<3){
+        ss1 = 'Your eye for detail is fair.'
+    }
+
+    if(score2 == 10 || score2 == 9){
+        ss2 = 'Your path finding abilities are incredible!'
+    }
+    if (score2 == 7 || score2 == 8){
+        ss2 = 'Your path finding abilities are good!'
+    }
+    else if (score2<8){
+        ss2 = 'Your path finding abilities are fair.'
+    }
+
+    if(score3 == 5){
+        ss3 = 'Your general knowledge is Exceptional!'
+    }
+    if(score3 == 4 || score3 == 3){
+        ss3 = 'Your general knowledge is Outstanding!'
+    }
+    else if (score3<3){
+        ss3 = "Your general knowledge is fair."
+    }
+
+    displayScore.innerHTML = `Score(out of 20): ${final_score}`;
+    let user = localStorage.getItem("username")
+    let softskill1 = document.getElementById("ssa1")
+    softskill1.innerHTML = ss1;
+    
+    let softskill2 = document.getElementById("ssa2")
+    softskill2.innerHTML = ss2;
+    
+    let softskill3= document.getElementById("ssa3")
+    softskill3.innerHTML = ss3;
+    
+    const response = await axios.post(`${BASE_URL}/inputScore/`, {username:user,s1:s1,s2:s2,s3:s3,sf:final_score});
+      
+    } catch (errors) {
+      console.error(errors);
+    }
+  }
+  
+pass()
+</script>

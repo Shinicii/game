@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>decoder</title>
+</head>
+<body>
+  
+    <h1 id="p3h">Guess the Word!</h1>
+    <h3>Hints</h3>
+    <h4>1. It's a name of an MNC.</h4>
+    <h4>2. Its one of the from FAANG.</h4>
+    <span>Tries Left</span>
+    <span id="guess-count">5</span>
+    <div>
+        <div id="word-container"></div>
+      </main>
+      <footer>
+        <p>Guess Letter:</p>
+        <input type="text" id="guess-input">
+        <button id="guess-button">Guess</button>
+      </footer>
+      <a id="cantamy" href="decode.html">Retry</a>
+</body>
+</html>
+
+<script>
+const words = ["facebook", "apple", "amazon", "netflix", "google"];
+
+let secretWord = words[Math.floor(Math.random() * words.length)];
+
+let incorrectGuesses = 5;
+let guesses = [];
+
+const wordContainer = document.getElementById("word-container");
+const guessesContainer = document.getElementById("guesses-container");
+const guessInput = document.getElementById("guess-input");
+const guessButton = document.getElementById("guess-button");
+const guessCount = document.getElementById("guess-count");
+
+for (let i = 0; i < secretWord.length; i++) {
+  const letterDiv = document.createElement("div");
+  letterDiv.classList.add("letter");
+  wordContainer.appendChild(letterDiv);
+}
+
+guessInput.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+    guessButton.click();
+  }
+});
+
+guessButton.addEventListener("click", function() {
+  const guess = guessInput.value.toLowerCase();
+
+  if (guesses.includes(guess)) {
+    alert("You have already guessed this letter!");
+    return;
+  }
+
+  guesses.push(guess);
+
+  if (secretWord.includes(guess)) {
+    const letterDivs = wordContainer.querySelectorAll(".letter");
+    for (let i = 0; i < secretWord.length; i++) {
+      if (secretWord[i] === guess) {
+        letterDivs[i].textContent = guess;
+      }
+    }
+    if (wordContainer.textContent === secretWord) {
+      localStorage.setItem("s3",incorrectGuesses)
+        alert("Password accpeted!")
+        window.open("finish.html","_self")
+    }
+  } else {
+    incorrectGuesses--;
+    guessCount.textContent = incorrectGuesses;
+    if (incorrectGuesses == 0) {
+      alert(`GAME OVER! The secret word was ${secretWord}.`);
+      window.open("index.html","_self")
+      localStorage.clear()
+    }
+  }
+
+  guessInput.value = "";
+});
+</script>

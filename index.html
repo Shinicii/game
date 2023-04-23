@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loginpage</title>
+</head>
+
+<body>
+  <h1 id="pg12">Escape to Reality!</h1>
+  <p>Hi! Last night, you slept on your usual bedtime. You wake up at 3 A.M. because of a tummy ache. Was it because of
+    the momos you ate yesterday or the flu? You don't know. You carry yourself, half asleep, to the bathroom door to
+    release some pressure. You open the door, but it doesn’t feel normal. Something’s different, you notice but choose
+    to ignore, as there were more important things to worry about. As soon as you step into the doorframe, you’re
+    teleported to a fairy land and are converted to your favorite anime character, the one who you always wanted to
+    become. You are greeted by an elderly woman, a witch probably. She welcomes you to the
+    “Land of Misery”. Your stomach is getting worse by the second. She tells you she cast a spell on you to test how you
+    perform under pressure. She tells you that to get back to your room, you need to complete three levels, each much
+    more difficult than the last. Can you pass this test? Can you ESCAPE BACK TO REALITY?
+  </p>
+
+  <h2>Rules:</h2>
+  <p>The game consists of 3 levels, in each you have to find the solution to pass on to the next level.
+    You have 10 strikes for door number 1 and 3 combined and a timer for door number 2. If you’re unable to solve the
+    puzzles within the constraints, it's GAME OVER! These puzzles will analyze your soft skills and performance under
+    pressure and an analysis will be given at the end. Enter your login details below to start.
+  </p>
+  <form>
+    <label>Enter username</label>
+    <input placeholder="username" type="text" id="username" name="username">
+    <label>Enter password</label>
+    <input placeholder="password" type="password" id="password" name="password">
+    <button type="button" value="Login" id="start" onclick="pass()">Start</button>
+  </form>
+    <a href="/leaderboard.html">Visit Leaderboard!</a>
+    <h5>New user?</h5>
+    <a href="/signup.html">Signup to play!</a>
+</body>
+
+</html>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  const BASE_URL = 'https://game.shinicii.repl.co';
+  const pass = async () => {
+    try {
+      let inputpass = document.getElementById("password").value
+      const user = document.getElementById("username").value
+      const response = await axios.post(`${BASE_URL}/getPass/`, {username:user});
+      const passw = response.data[0].pass;
+      if(inputpass == "admin" && user == "admin"){
+        window.open("admin.html","_self")
+      }else{
+      if (inputpass == passw) {
+        localStorage.setItem("username", user)
+
+        window.open("findkey.html", "_self")
+      }
+      else {
+        alert("Invalid credentials.")
+        window.open("index.html", "_self")
+      }}
+    } catch (errors) {
+      console.error(errors);
+    }
+  }
+  
+</script>

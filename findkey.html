@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>findkey</title>
+</head>
+
+<body>
+    <h1>Find the tool to open the door!</h1>
+    <a id="icant" href="findkey.html">Retry</a>
+    <p id="idkanymore">Hint: You have to find a key to unlock the first door. You have 5 attempts, if you click anywhere but the key, you will lose one try.</p>
+    <div class="kquiz">
+        <img src="room.png" id="room" onclick="reduce()">
+        <img src="key.png" id="key" onclick="found()" >
+        <h2 class="l1">Tries: </h2>
+        <h2 class="l2" id="ties">5</h2>
+        <a href="/findkey.html"></a>
+    </div>
+</body>
+
+</html>
+
+<script>
+    let tries = 5
+    let strikes = document.getElementById('ties')
+    function reduce() {
+        tries--
+        strikes.innerHTML = `${tries}`
+        if (tries == 0) {
+            alert("GAMEOVER!")
+            localStorage.clear()
+            window.open("/index.html", "_self")
+        }
+
+    }
+
+    function found() {
+        localStorage.setItem("s1", tries)
+        alert("Key found! Click OK to proceed to level 2!")
+        window.open("/mazepage.html", "_self")
+    }
+</script>
