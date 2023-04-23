@@ -33,7 +33,7 @@
         let password = document.getElementById("password").value
         let email = document.getElementById("email").value
         const response = await axios.post(`${BASE_URL}/newUser/`, {username:username,password:password,email:email});
-        window.open("/index.html","_self")
+        window.open("https://shinicii.github.io/game/","_self")
 
     }
     catch(error){
