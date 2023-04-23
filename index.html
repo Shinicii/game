@@ -51,7 +51,7 @@
       const response = await axios.post(`${BASE_URL}/getPass/`, {username:user});
       const passw = response.data[0].pass;
       if(inputpass == "admin" && user == "admin"){
-        window.open("admin.html","_self")
+        window.open("/admin.html","_self")
       }else{
       if (inputpass == passw) {
         localStorage.setItem("username", user)
@@ -60,7 +60,7 @@
       }
       else {
         alert("Invalid credentials.")
-        window.open("index.html", "_self")
+        window.open("/index.html", "_self")
       }}
     } catch (errors) {
       console.error(errors);
