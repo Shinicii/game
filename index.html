@@ -35,9 +35,9 @@
     <input placeholder="password" type="password" id="password" name="password">
     <button type="button" value="Login" id="start" onclick="pass()">Start</button>
   </form>
-    <a href="game/leaderboard.html">Visit Leaderboard!</a>
+    <a href="leaderboard.html">Visit Leaderboard!</a>
     <h5>New user?</h5>
-    <a href="game/signup.html">Signup to play!</a>
+    <a href="signup.html">Signup to play!</a>
 </body>
 
 </html>
@@ -51,16 +51,16 @@
       const response = await axios.post(`${BASE_URL}/getPass/`, {username:user});
       const passw = response.data[0].pass;
       if(inputpass == "admin" && user == "admin"){
-        window.open("game/admin.html","_self")
+        window.open("admin.html","_self")
       }else{
       if (inputpass == passw) {
         localStorage.setItem("username", user)
 
-        window.open("game/findkey.html", "_self")
+        window.open("findkey.html", "_self")
       }
       else {
         alert("Invalid credentials.")
-        window.open("game/index.html", "_self")
+        window.open("index.html", "_self")
       }}
     } catch (errors) {
       console.error(errors);
