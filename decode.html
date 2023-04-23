@@ -23,7 +23,7 @@
         <input type="text" id="guess-input">
         <button id="guess-button">Guess</button>
       </footer>
-      <a id="cantamy" href="game/decode.html">Retry</a>
+      <a id="cantamy" href="decode.html">Retry</a>
 </body>
 </html>
 
@@ -73,7 +73,7 @@ guessButton.addEventListener("click", function() {
     if (wordContainer.textContent === secretWord) {
       localStorage.setItem("s3",incorrectGuesses)
         alert("Password accpeted!")
-        window.open("game/finish.html","_self")
+        window.open("finish.html","_self")
     }
   } else {
     incorrectGuesses--;
